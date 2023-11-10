@@ -9,7 +9,6 @@ function generateTodoList() {
     request.onreadystatechange = (event) => {
         if (event.target.readyState == 4 && event.target.status == 200) {
             let todos = JSON.parse(event.target.responseText);
-            console.log(todos);
             generateTodoListMarkup(todos);
         } else if (event.target.readyState == 4) {
             console.log(event.target.responseText);
@@ -24,45 +23,58 @@ function generateTodoListMarkup(todos) {
     let todoList = document.getElementById("todo-list");
     todoList.innerHTML = "";
 
-    let todoListUl = document.createElement("ul");
-    todoList.appendChild(todoListUl);
-
     for (let i = 0; i < todos.length; i++) {
         let todo = todos[i];
 
-        let todoItem = document.createElement("li");
-        todoItem.setAttribute("id", todo.id);
-        todoItem.setAttribute("class", "todo");
+        let todoContainer = document.createElement("div");
+        todoContainer.classList.add("todo-container");
+        todoList.appendChild(todoContainer);
 
-        // Checkbox for checking off todo
+        let checkboxContainer = document.createElement("div");
+        checkboxContainer.classList.add("checkbox-container");
+        todoContainer.appendChild(checkboxContainer);
+
         let checkboxLabel = document.createElement("label");
+        checkboxLabel.textContent = "Mark as complete?";
+        checkboxContainer.appendChild(checkboxLabel);
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = todo.completed;
-        checkbox.addEventListener("click", function () {
+        checkbox.addEventListener("change", function () {
             updateTodoStatus(todo.id, checkbox.checked);
         });
+        checkboxContainer.appendChild(checkbox);
 
-        checkboxLabel.appendChild(checkbox);
-        checkboxLabel.appendChild(document.createTextNode(todo.text));
-        todoItem.appendChild(checkboxLabel);
+        let textContainer = document.createElement("div");
+        textContainer.classList.add("text-container");
+        todoContainer.appendChild(textContainer);
+
+        let text = document.createElement("span");
+        text.textContent = todo.text;
+        textContainer.appendChild(text);
+
+        let editContainer = document.createElement("div");
+        editContainer.classList.add("edit-container");
+        todoContainer.appendChild(editContainer);
 
         let editButton = document.createElement("button");
-        editButton.innerText = "Edit";
+        editButton.textContent = "Edit";
         editButton.addEventListener("click", function () {
-            switchToEditMode(todo.id, todo.text, todoItem);
+            switchToEditMode(todo.id, todo.text, todoContainer);
         });
-        todoItem.appendChild(editButton);
+        editContainer.appendChild(editButton);
+
+        let deleteContainer = document.createElement("div");
+        deleteContainer.classList.add("delete-container");
+        todoContainer.appendChild(deleteContainer);
 
         let deleteButton = document.createElement("button");
-        deleteButton.innerText = "Delete";
+        deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", function () {
             deleteTodo(todo.id);
         });
-        todoItem.appendChild(deleteButton);
-
-        todoListUl.appendChild(todoItem);
+        deleteContainer.appendChild(deleteButton);
     }
 }
 
@@ -70,14 +82,12 @@ function updateTodoStatus(todoId, completed) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            generateTodoList(); // Update the UI after modifying the todo
+            generateTodoList();
         } else if (this.readyState == 4) {
             console.log(this.responseText);
         }
     }
-    console.log("update?")
-    console.log(todoId)
-    console.log(completed)
+
     request.open("PUT", apiUrl + `/${todoId}`, true);
     request.setRequestHeader("Content-type", "application/json");
     request.setRequestHeader("x-api-key", apiKey);
@@ -88,30 +98,32 @@ function deleteTodo(todoId) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            generateTodoList(); // Update the UI after deleting the todo
+            generateTodoList();
         } else if (this.readyState == 4) {
             console.log(this.responseText);
         }
     }
+
     request.open("DELETE", apiUrl + `/${todoId}`, true);
     request.setRequestHeader("x-api-key", apiKey);
     request.send();
 }
 
 function switchToEditMode(todoId, currentText, todoItem) {
-    let label = todoItem.querySelector('label');
-    let checkbox = label.querySelector('input[type="checkbox"]');
+    let textContainer = todoItem.querySelector('.text-container');
+
+    let checkbox = todoItem.querySelector('.checkbox-container input[type="checkbox"]');
     let initialCheckedState = checkbox.checked;
 
     let inputField = document.createElement("input");
     inputField.type = "text";
     inputField.value = currentText;
+    inputField.classList.add("text-input");
 
-    label.innerHTML = "";
-    label.appendChild(checkbox);
-    label.appendChild(inputField);
+    textContainer.innerHTML = "";
+    textContainer.appendChild(inputField);
 
-    let editButton = todoItem.querySelector('button');
+    let editButton = todoItem.querySelector('.edit-container button');
     editButton.innerText = "Save";
     editButton.removeEventListener("click", switchToEditMode);
 
@@ -119,6 +131,7 @@ function switchToEditMode(todoId, currentText, todoItem) {
         saveChanges(todoId, inputField.value, todoItem, initialCheckedState);
     });
 }
+
 
 function saveChanges(todoId, newText, todoItem, initialCheckedState) {
     let request = new XMLHttpRequest();
@@ -154,7 +167,6 @@ newTodoForm.addEventListener("submit", function (event) {
     request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let todo = JSON.parse(this.responseText);
-            console.log(todo);
             generateTodoList();
             document.getElementById("new-todo-text").value = "";
         } else if (this.readyState == 4) {

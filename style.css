@@ -1,0 +1,203 @@
+/*Normalization template from https://stackoverflow.com/questions/11578280/what-exactly-does-normalization-in-css-do/11578327#11578327 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+    margin:0;
+    padding:0;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+fieldset,img { 
+    border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+    font-style:normal;
+    font-weight:normal;
+}
+ol,ul {
+    list-style:none;
+}
+caption,th {
+    text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-size:100%;
+    font-weight:normal;
+}
+q:before,q:after {
+    content:'';
+}
+body{
+    width:100%;
+}
+abbr,acronym { border:0;}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100%;
+    width: auto;
+}
+header {
+    font-weight: bold;
+    width: 100%;
+    background-color: #333;
+    color: white; 
+    text-align: center;
+    justify-content: center;
+    padding: 2.5% 0; 
+}
+header h1{
+    font-size: 40px;
+}
+main {
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    width:50%;
+}
+main h2{
+    font-size: 28px;
+    margin-top: 10%;
+    margin-bottom: 10%
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+#new-todo{
+    box-sizing: border-box; 
+    margin-top: 5%;
+    padding: 5%;
+    background-color: lightgoldenrodyellow;
+    border-radius: 8px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+#new-todo-form{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#new-todo-text{
+    padding: 2%;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    margin-right: 10px;
+    flex-grow: 1;
+}
+#new-todo-submit{
+    font-size: 16px;
+    padding: 2%;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+.todo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5%;
+    border-radius: 10px;
+}
+
+.checkbox-container {
+    border-radius: 5px;
+    border: 5px solid #ccc; /* Increase border size */
+    padding: 2%; /* Increase padding */ /* Increase border radius */
+    display: flex;
+    flex-direction: column;
+}
+.checkbox-container input{
+    margin-top: 5%;
+}
+
+/* Text Container */
+.text-container {
+    flex-grow: 1;
+    margin: 0 10px;
+    border: 5px solid #ccc; /* Increase border size */
+    border-radius: 8px; /* Increase border radius */
+    padding: 2%; /* Increase padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add drop shadow effect */
+}
+.text-container span{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+/* Edit Container */
+.edit-container {
+    margin-right: 10px;
+    border: 5px solid #ccc; /* Increase border size */
+    border-radius: 8px; /* Increase border radius */
+    padding: 2%; /* Increase padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add drop shadow effect */
+}
+
+/* Delete Container */
+.delete-container {
+    margin-left: 10px;
+    border: 5px solid #ccc; /* Increase border size */
+    border-radius: 8px; /* Increase border radius */
+    padding: 2%; /* Increase padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add drop shadow effect */
+}
+
+/* Specific Styling for Delete Button inside Todo Container */
+.todo-container .delete-container button {
+    background-color: #ff3333;
+    color: white;
+    border: 5px solid #ff3333; /* Increase border size */
+    border-radius: 8px; /* Increase border radius */
+    padding: 2%; /* Increase padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add drop shadow effect */
+}
+
+/* Specific Styling for Buttons inside Todo Container */
+.todo-container button {
+    background-color: #333;
+    color: white;
+    border: 5px solid #333; /* Increase border size */
+    border-radius: 8px; /* Increase border radius */
+    padding: 2%; /* Increase padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add drop shadow effect */
+}
+
+/* Todo Container Styling */
+.todo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Ensure all children stretch to the same height */
+    justify-content: space-between;
+    margin: 5%;
+    height: 20%;
+}
+
+.checkbox-container,
+.text-container,
+.edit-container,
+.delete-container {
+    display: flex;
+    align-items: center; 
+}
+.text-input {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    width: 50%;
+    margin: 0 auto;
+}
