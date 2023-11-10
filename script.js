@@ -28,6 +28,11 @@ function generateTodoListMarkup(todos) {
 
         let todoContainer = document.createElement("div");
         todoContainer.classList.add("todo-container");
+
+        if (todo.completed) {
+            todoContainer.classList.add("completed");
+        }
+
         todoList.appendChild(todoContainer);
 
         let checkboxContainer = document.createElement("div");
