@@ -91,12 +91,12 @@ function updateTodoStatus(todoId, completed) {
         } else if (this.readyState == 4) {
             console.log(this.responseText);
         }
-
+    }
     request.open("PUT", apiUrl + `/${todoId}`, true);
     request.setRequestHeader("Content-type", "application/json");
     request.setRequestHeader("x-api-key", apiKey);
     request.send(JSON.stringify({ completed }));
-}
+
 }
 
 function deleteTodo(todoId) {
